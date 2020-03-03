@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:replace="layout::headLibAll"></th:block>
+    <title>Chi Tiết Của Mục Kêu Gọi</title>
+</head>
+<body>
+<header>
+    <nav th:replace="layout::mainNavbar"></nav>
+    <!-- Page Header -->
+    <div id="page-header">
+        <!-- section background -->
+        <div class="section-bg"
+             th:style="'background-image : url(' + ${'/img/background-2.jpg'} + ')'"></div>
+        <!-- /section background -->
+
+        <!-- page header content -->
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="header-content">
+                        <h1>Mục Từ Thiện</h1>
+                        <ul class="breadcrumb">
+                            <li><a th:href="@{/}">Trang Chủ</a></li>
+                            <li><a>Từ Thiện</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /page header content -->
+    </div>
+    <!-- /Page Header -->
+</header>
+
+<div class="section">
+    <!-- container -->
+    <div class="container">
+        <!-- row -->
+        <div class="row">
+            <!-- MAIN -->
+            <main id="main" class="col-md-9">
+                <!-- article -->
+                <div class="article causes-details">
+                    <!-- article img -->
+                    <div class="article-img">
+                        <img src="" alt="">
+                    </div>
+                    <!-- article img -->
+
+                    <!-- causes progress -->
+                    <div class="clearfix">
+                        <div class="causes-progress">
+                            <div class="causes-progress-bar">
+                                <div style="width: 53%;">
+                                    <span></span>
+                                </div>
+                            </div>
+                            <div>
+                                <span class="causes-raised">Đã Được: <strong></strong></span>
+                                <span class="causes-goal">Mục Tiêu: <strong></strong></span>
+                            </div>
+                        </div>
+                        <button type="button" class="primary-button causes-donate"
+                                data-toggle="modal" data-target="#donateModal">
+                            Đóng Góp Ngay
+                        </button>
+                    </div>
+                    <div class="row">
+                        <button type="button" class="primary-button causes-donate"
+                                data-toggle="modal" data-target="#listInfoDonate">
+                            Danh Sách Đóng Góp
+                        </button>
+                        <th:block sec:authorize="hasRole('ROLE_ADMIN')">
+                            <button type="button" class="primary-button causes-donate"
+                                    data-toggle="modal" onclick="transferCreateEvent()">
+                                Tạo Sự Kiện
+                            </button>
+                        </th:block>
+                    </div>
+                    <!-- /causes progress -->
+
+                    <!-- article content -->
+                    <div class="article-content">
+                        <!-- article title -->
+                        <h2 class="article-title"></h2>
+                        <!-- /article title -->
+
+                        <!-- article meta -->
+                        <ul class="article-meta">
+                        </ul>
+                        <!-- /article meta -->
+                        <div class="summaryOfVote" id="contentOfVote">
+
+                        </div>
+                    </div>
+                    <!-- /article content -->
+
+                    <!-- article tags share -->
+                    <div class="article-tags-share">
+                        <!-- article tags -->
+                        <ul class="tags" id="listCategory">
+                            <li>Mục:</li>
+                        </ul>
+                        <!-- /article tags -->
+
+                    </div>
+                    <!-- /article tags share -->
+                </div>
+                <!-- /article -->
+            </main>
+            <!-- /MAIN -->
+
+            <!-- ASIDE -->
+            <aside id="aside" class="col-md-3">
+                <!-- category widget -->
+                <div class="widget">
+                    <h3 class="widget-title">Chỉ Mục</h3>
+                    <div class="widget-category">
+                        <ul>
+                        </ul>
+                    </div>
+                </div>
+                <!-- /category widget -->
+
+                <!-- causes widget -->
+                <div class="widget" id="top3Vote">
+
+
+                </div>
+                <!-- causes widget -->
+            </aside>
+            <!-- /ASIDE -->
+        </div>
+        <!-- /row -->
+    </div>
+    <!-- /container -->
+</div>
+
+<footer th:replace="layout::mainFooter"></footer>
+
+<!-- Modal -->
+<div class="modal fade" id="donateModal" tabindex="-1" role="dialog" aria-labelledby="donateModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title" id="exampleModalLabel">Đóng Góp</h3>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <th:block sec:authorize="isAnonymous()">
+                    <div class="modal-body">
+                        <form method="post" id="formDonate" enctype='application/json'>
+                            <div class="form-group">
+                                <label for="nameVolunteer">Tên</label>
+                                <input type="text" class="form-control" id="nameVolunteer"
+                                       name="name" placeholder="Tên Của Bạn">
+                            </div>
+                            <div class="form-group">
+                                <label for="emailVolunteer">Email</label>
+                                <input type="email" class="form-control" id="emailVolunteer"
+                                       name="email" placeholder="Email Của Bạn">
+                                <p class="alert alert-danger errorForEmailVolunteer"></p>
+                            </div>
+                            <div class="form-group">
+                                <label for="moneyDonate">Số Tiền</label>
+                                <input type="number" class="form-control" id="moneyDonate"
+                                       name="amount" placeholder="Số Tiền Bạn Muốn Đóng Góp">
+                                <p class="alert alert-danger errorForMoneyDonate"></p>
+                            </div>
+                            <div class="form-group">
+                                <label for="isHidedAny">Bạn Có Muốn Ẩn Danh Không?</label>
+                                <select type="number" class="form-control" id="isHidedAny"
+                                        name="isHided">
+                                    <option value="0">Không</option>
+                                    <option value="1">Có</option>
+                                </select>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="primary-button causes-donate" id="submitDonateNoLogin">Donate</button>
+                    </div>
+                </th:block>
+                <th:block sec:authorize="isAuthenticated()">
+                    <div class="modal-body">
+                        <form method="post" id="formDonateLogin" enctype='application/json'>
+                            <div class="form-group">
+                                <label for="moneyDonate">Số Tiền</label>
+                                <input type="number" class="form-control" id="moneyDonateLogin"
+                                       name="amount" placeholder="Số Tiền Bạn Muốn Đóng Góp">
+                                <p class="alert alert-danger errorForMoneyDonate"></p>
+                            </div>
+                            <div class="form-group">
+                                <label for="isHidedLogin">Bạn Có Muốn Ẩn Danh Không?</label>
+                                <select type="number" class="form-control" id="isHidedLogin"
+                                        name="isHided">
+                                    <option value="0">Không</option>
+                                    <option value="1">Có</option>
+                                </select>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                        <button type="button" class="primary-button causes-donate" id="submitDonateLogin">Đóng Góp</button>
+                    </div>
+                </th:block>
+            </div>
+        </div>
+    </div>
+
+<div class="modal fade" id="listInfoDonate" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <table class="table" id="listPersonDonate">
+                        <thead>
+                        <tr>
+                            <th scope="col">Tên</th>
+                            <th scope="col">Số Tiền Đóng Góp</th>
+                            <th scope="col">Ngày</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="row">
+                    <nav>
+                        <ul class="pagination" id="pagination">
+
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="alertModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<th:block th:replace="layout::scriptLibAll"></th:block>
+<script type="text/javascript" th:inline="javascript">
+    var id = null,
+        voteData = new JsonVote(),
+        pageListDonate = 0,
+        sizePageListDonate = 7;
+    $(document).ready(function(){
+            var path = window.location.pathname.split('/');
+            id = parseInt(path[2]);
+            voteData.getCategory();
+            voteData.getData(id);
+            voteData.getTag(id);
+            voteData.getTop3Vote();
+            voteData.hideErrorModal();
+            voteData.getListDonate(id,pageListDonate,sizePageListDonate);
+            setPage(id,pageListDonate,sizePageListDonate);
+        }
+    );
+
+    $("#submitDonateNoLogin").click(function () {
+        voteData.donateNoLogin(id);
+    });
+    $("#submitDonateLogin").click(
+        function () {
+            voteData.donateLogin(id);
+        }
+    );
+
+    function transferPage(page){
+        pageListDonate = page;
+        voteData.getListDonate(id,pageListDonate,sizePageListDonate);
+        setPage(id,pageListDonate,sizePageListDonate);
+
+    }
+    function setPage(id, page, size){
+        var pagination = $("#pagination"),
+            previousPage = page - 1;
+        if (previousPage >= 0){
+            pagination.html("<li>" +
+                "<a class='page-link' tabindex='-1' onclick='transferPage(" + previousPage + ");'>Previous</a>" +
+                "</li>");
+        }
+        else {
+            pagination.html("<li class='disabled'>" +
+                "<a class='page-link' onclick='transferPage(" + page + ");' tabindex='-1'>Previous</a>" +
+                "</li>");
+        }
+
+        getJson("donateRest/getAmountPage/" + id + "/" + size).done(
+            function (data) {
+                var totalPage = data;
+                var show = 0;
+                for (var i=0; i<totalPage;i++){
+                    show = i + 1;
+                    if (i === page)
+                        pagination.append("<li class='active'>" +
+                            "<a onclick='transferPage(" + i + ");' tabindex='-1'>" + show + "</a>" +
+                            "</li>");
+                    else
+                        pagination.append("<li value=''>" +
+                            "<a onclick='transferPage(" + i + ");' tabindex='-1'>" + show + "</a>" +
+                            "</li>");
+                }
+                var nextPage = page + 1;
+                if (nextPage<totalPage){
+                    pagination.append("<li>" +
+                        "<a onclick='transferPage(" + nextPage + ");' tabindex='-1'>Next</a>" +
+                        "</li>");
+                }
+                else{
+                    pagination.append("<li class='disabled'>" +
+                        "<a onclick='transferPage(" + page + ");' tabindex='-1'>Next</a>" +
+                        "</li>");
+                }
+
+            }
+        );
+    }
+</script>
+<th:block sec:authorize="hasRole('ROLE_ADMIN')">
+    <script>
+        function transferCreateEvent() {
+            window.location = "/event_manager/create_event/" + id;
+        }
+    </script>
+</th:block>
+</body>
+</html>

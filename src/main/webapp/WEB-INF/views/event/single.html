@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:replace="layout::headLibAll"></th:block>
+    <title>Chi Tiết Của Sự Kiện</title>
+</head>
+<body>
+<header>
+    <nav th:replace="layout::mainNavbar"></nav>
+    <!-- Page Header -->
+    <div id="page-header">
+        <!-- section background -->
+        <div class="section-bg"
+             th:style="'background-image : url(' + ${'/img/background-2.jpg'} + ')'"></div>
+        <!-- /section background -->
+
+        <!-- page header content -->
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="header-content">
+                        <h1>Mục Sự Kiện</h1>
+                        <ul class="breadcrumb">
+                            <li><a th:href="@{/}">Trang Chủ</a></li>
+                            <li><a>Chi Tiết Sự Kiện</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /page header content -->
+    </div>
+    <!-- /Page Header -->
+</header>
+
+<div class="section">
+    <!-- container -->
+    <div class="container">
+        <!-- row -->
+        <div class="row">
+            <!-- MAIN -->
+            <main id="main" class="col-md-9">
+                <!-- article -->
+                <div class="article causes-details">
+                    <!-- article img -->
+                    <div class="article-img">
+                        <img src="" alt="">
+                    </div>
+                    <!-- article img -->
+
+                    <!-- causes progress -->
+                    <div class="clearfix">
+                        <div class="causes-progress">
+                            <div>
+                                <span class="causes-raised">Số Tiền Nhận Được: <strong></strong></span>
+                                <span>Đăng Ký: <strong id="checkRegister"></strong></span>
+                            </div>
+                        </div>
+                        <div>
+
+                        </div>
+                        <button type="button" class="primary-button causes-donate"
+                                data-toggle="modal" data-target="#register" id="buttonRegister">
+                            Đăng Ký
+                        </button>
+                    </div>
+                    <!-- /causes progress -->
+                    <div class="row" sec:authorize="hasRole('ROLE_ADMIN')">
+                        <button type="button" class="primary-button causes-donate"
+                                onclick="goToEditPage()">
+                            Sửa Thông Tin
+                        </button>
+                        <button type="button" class="primary-button causes-donate"
+                                data-toggle="modal" data-target="#listRegister" id="buttonListRegister">
+                            Duyệt Đăng Ký
+                        </button>
+                        <button type="button" class="primary-button causes-donate"
+                                data-toggle="modal" data-target="#finishThisEvent" id="buttonFinishEvent"
+                            hidden="hidden">
+                            Đóng Sự Kiện
+                        </button>
+                    </div>
+                    <!-- article content -->
+                    <div class="article-content">
+                        <!-- article title -->
+                        <h2 class="article-title"></h2>
+                        <!-- /article title -->
+
+                        <!-- article meta -->
+                        <ul class="article-meta">
+                        </ul>
+                        <!-- /article meta -->
+                        <div id="contentOfVote" class="contentOfVote">
+
+                        </div>
+                        <div class="contentOfVote main-background">
+                            <p id="note">
+
+                            </p>
+                        </div>
+                    </div>
+                    <!-- /article content -->
+                    <div class="article-tags-share">
+                        <!-- article tags -->
+                        <ul class="tags" id="listCategory">
+                            <li>Mục:</li>
+                        </ul>
+                        <!-- /article tags -->
+
+                    </div>
+                </div>
+                <!-- /article -->
+            </main>
+            <!-- /MAIN -->
+
+            <!-- ASIDE -->
+            <aside id="aside" class="col-md-3">
+                <!-- category widget -->
+                <div class="widget">
+                    <h3 class="widget-title">Chỉ Mục</h3>
+                    <div class="widget-category">
+                        <ul>
+                        </ul>
+                    </div>
+                </div>
+                <!-- /category widget -->
+
+                <!-- causes widget -->
+                <div class="widget" id="top3Vote">
+
+
+                </div>
+                <!-- causes widget -->
+            </aside>
+            <!-- /ASIDE -->
+        </div>
+        <!-- /row -->
+    </div>
+    <!-- /container -->
+</div>
+
+<footer th:replace="layout::mainFooter"></footer>
+
+<!-- Modal -->
+<div class="modal fade" id="register" tabindex="-1" role="dialog" aria-labelledby="donateModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="exampleModalLabel">Bạn Có Muốn Đăng Ký?</h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Với Sự Tham Gia Của Bạn, Sự Kiện Sẽ Diễn Ra Hiệu Quả Hơn</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                <button type="button" class="primary-button causes-donate" id="registerButton">Đăng Ký</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="alertModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<th:block sec:authorize="hasRole('ROLE_ADMIN')">
+    <div class="modal fade" id="listRegister" tabindex="-1" role="dialog" aria-labelledby="donateModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title" id="">Danh Sách Người Đăng Ký</h3>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>Hiện Có <span id="amountAccept"></span> / <span id="amountLimit"></span> Được Duyệt/Số Người Cần</p>
+                    <div class="row">
+                        <table class="table" id="listPersonRegister">
+                            <thead>
+                            <tr>
+                                <th scope="col">Tên</th>
+                                <th scope="col">Ngày</th>
+                                <th scope="col">Xác Nhận</th>
+                                <th scope="col">Xóa</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="row">
+                        <nav>
+                            <ul class="pagination" id="pagination">
+
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="finishThisEvent" tabindex="-1" role="dialog" aria-labelledby="donateModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title">Bạn Có Chắc Chắn Về Việc Kết Thúc Sự Kiện Này?</h3>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>Những Đăng Ký Chưa Được Duyệt Sẽ Bị Xóa</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                    <button type="button" class="primary-button causes-donate" id="finishButton">Kết Thúc</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</th:block>
+
+<th:block th:replace="layout::scriptLibAll"></th:block>
+<script th:src="@{/js/web/eventManagerForAll.js}"></script>
+<script type="text/javascript" th:inline="javascript">
+    var id = null,
+        singleEvent = new EventManagerForAll(),
+        voteData = new JsonVote();
+    $(document).ready(function(){
+            var path = window.location.pathname.split('/');
+            id = parseInt(path[3]);
+            voteData.getCategory();
+            voteData.getTop3Vote();
+            singleEvent.getSingle();
+            checkUserRegister();
+        }
+    );
+
+    $("#registerButton").click(function () {
+        singleEvent.register(id);
+    });
+
+    function goToEditPage() {
+        window.location = "/event_manager/edit/" + id;
+    }
+    function checkUserRegister() {
+        var check = $("#checkRegister");
+        getJson("eventRest/checkRegister/" + id).done(
+            function (data) {
+                check.html(data.checkRegister);
+            }
+        ).fail(function () {
+            check.html("Bạn Chưa Đăng Ký Tham Gia Sự Kiện Này");
+        });
+    }
+</script>
+<th:block sec:authorize="hasRole('ROLE_ADMIN')">
+    <script type="text/javascript" th:inline="javascript">
+        var pageRegister =0,
+            sizePage = 8,
+            table = $("#listPersonRegister").find("tbody"),
+            pagination = $("#pagination");
+        $(document).ready(function(){
+            getListRegister();
+            setPage();
+        });
+        function getAmountRegister() {
+            getJson("event_manager/countRegisterAccepted/" + id)
+            .done(function (data) {
+                $("#amountAccept").html(data.accepted);
+                $("#amountLimit").html(data.limit);
+                if (data.accepted >= data.limit){
+                    var button = $("button.btn-success");
+                    button.prop("disabled", true);
+                    button.attr("onclick", "");
+                }
+            });
+        }
+        function getListRegister() {
+            getJson("event_register_manager/getRegister/" + id +"/" + pageRegister + "/" + sizePage)
+                .done(function (data) {
+                    table.html("");
+                    var buttonAccept = "",
+                        deleteButton = "";
+                    $.each(data, function (index,row) {
+                        if (row.accepted){
+                            buttonAccept =
+                                "<button class='btn btn-info' " +
+                                    "onclick='checkRegister(" + row.registerId + ")'>" +
+                                        "Bỏ Chấp Nhận" +
+                                "</button>";
+                            deleteButton =
+                                "<button class='btn btn-danger' " +
+                                    "disabled>" +
+                                        "Xóa" +
+                                "</button>";
+                        }
+                        else {
+                            buttonAccept = "<button class='btn btn-success' " +
+                                                "onclick='checkRegister(" + row.registerId + ")'>" +
+                                                    "Chấp Nhận" +
+                                            "</button>";
+                            deleteButton =
+                                "<button class='btn btn-danger' " +
+                                "onclick='deleteRegister(" + row.registerId + ")'>" +
+                                "Xóa" +
+                                "</button>";
+                        }
+                        table.append("<tr>" +
+                            "<td>" + row.name + "</td>" +
+                            "<td>" + new Date(row.registerDate) + "</td>" +
+                            "<td>" + buttonAccept + "</td>" +
+                            "<td>" + deleteButton + "</td>" +
+                            "</tr>");
+                    });
+                    getAmountRegister();
+                });
+        }
+        function setPage(){
+            var previousPage = pageRegister - 1,
+                pagination = $("#pagination");
+            if (previousPage >= 0){
+                pagination.html("<li>" +
+                    "<a class='page-link' tabindex='-1' onclick='transferPage(" + previousPage + ");'>Previous</a>" +
+                    "</li>");
+            }
+            else {
+                pagination.html("<li class='disabled'>" +
+                    "<a class='page-link' onclick='transferPage(" + pageRegister + ");' tabindex='-1'>Previous</a>" +
+                    "</li>");
+            }
+
+            getJson("event_register_manager/getRegisterPage/" + id + "/" + sizePage).done(
+                function (data) {
+                    var totalPage = data;
+                    var show = 0;
+                    for (var i=0; i<totalPage;i++){
+                        show = i + 1;
+                        if (i === pageRegister)
+                            pagination.append("<li class='active'>" +
+                                "<a onclick='transferPage(" + i + ");' tabindex='-1'>" + show + "</a>" +
+                                "</li>");
+                        else
+                            pagination.append("<li value=''>" +
+                                "<a onclick='transferPage(" + i + ");' tabindex='-1'>" + show + "</a>" +
+                                "</li>");
+                    }
+                    var nextPage = pageRegister + 1;
+                    if (nextPage<totalPage){
+                        pagination.append("<li>" +
+                            "<a onclick='transferPage(" + nextPage + ");' tabindex='-1'>Next</a>" +
+                            "</li>");
+                    }
+                    else{
+                        pagination.append("<li class='disabled'>" +
+                            "<a onclick='transferPage(" + pageRegister + ");' tabindex='-1'>Next</a>" +
+                            "</li>");
+                    }
+
+                }
+            );
+        }
+        function transferPage(page) {
+            pageRegister = page;
+            getListRegister();
+            setPage();
+        }
+
+        function checkRegister(registerId) {
+            $.ajax({
+                url: urlRoot + "event_manager/checkRegister/" + registerId ,
+                method: 'PUT',
+                dataType: 'json',
+                contentType: 'application/json'
+            }).done(
+                function (data) {
+                    console.log(data.messenger);
+                    getListRegister();
+                    setPage();
+                    checkUserRegister();
+                }
+            );
+        }
+        function deleteRegister(registerId) {
+            $.ajax({
+                url: urlRoot + "event_manager/deleteRegister/" + registerId ,
+                method: 'DELETE',
+                dataType: 'json',
+                contentType: 'application/json'
+            }).done(
+                function (data) {
+                    console.log(data.messenger);
+                    getListRegister();
+                    setPage();
+                    checkUserRegister();
+                }
+            );
+        }
+        $("#finishButton").click(function () {
+            $.ajax({
+                url: urlRoot + "event_manager/finishEvent/" + id ,
+                method: 'PUT',
+                dataType: 'json',
+                contentType: 'application/json'
+            }).done(
+                function (data) {
+                    alert(data.messenger);
+                    window.location = "/event/single_event_finish/" + id;
+                }
+            );
+        });
+    </script>
+</th:block>
+</body>
+</html>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:replace="layout::headLibAll">
+    </th:block>
+    <title>Đang Đăng Nhập</title>
+</head>
+<body>
+<header>
+    <nav th:replace="layout::mainNavbar"></nav>
+</header>
+
+<div class="section" style="margin-top: 10%">
+    <!-- container -->
+    <div class="container text-center">
+        <!-- row -->
+        <div class="row hidden">
+            <div class="center-block col-sm-12 col-md-8  col-lg-6">
+                <form method="post" th:action="@{/loginAccount}" id="autoLogin">
+                    <div class="form-group">
+                        <label for="user_name">Tài Khoản</label>
+                        <input type="text" class="input" id="user_name" name="username"
+                               th:value="${userName}">
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Mật Khẩu</label>
+                        <input type="password" class="input" id="password" name="password"
+                               th:value="${password}">
+                    </div>
+                </form>
+            </div>
+
+        </div>
+        <div class="row text-center" style="margin-top: 15%;margin-bottom: 15%">
+            <p>Đang Đăng Nhập, Hãy Chờ</p>
+        </div>
+    </div>
+</div>
+
+<footer th:replace="layout::mainFooter"></footer>
+<th:block th:replace="layout::scriptLibAll">
+</th:block>
+<script>
+    $(document).ready(
+        function () {
+            $("#autoLogin").submit();
+        }
+    );
+</script>
+</body>
+</html>

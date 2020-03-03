@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:replace="layout::headLibAll"></th:block>
+    <title>Charity</title>
+</head>
+<body>
+    <header>
+        <nav th:replace="layout::mainNavbar"></nav>
+        <!-- HOME OWL -->
+        <div id="home-owl" class="owl-carousel owl-theme">
+            <!-- home item -->
+            <div class="home-item">
+                <!-- section background -->
+                <div class="section-bg" id="firstBGImage"
+                     th:style="'background-image : url(' + ${'/img/background-1.jpg'} + ')'">
+                </div>
+                <!-- /section background -->
+
+                <!-- home content -->
+                <div class="home">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-8">
+                                <div class="home-content">
+                                    <h1>Hãy Giúp Đỡ Mọi Người</h1>
+                                    <p class="lead">Còn Nhiều Hoàn Cảnh Khó Khăn Cần Những Bàn Tay Giúp Đỡ Để Họ Có Thể Có Một Cuộc Sống Tốt Đẹp Hơn</p>
+                                    <a th:href="@{/all}" class="primary-button">Hãy Chung Tay Với Chúng Tôi Cho Một Thế Giới Hạnh Phúc Hơn</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- /home content -->
+            </div>
+            <!-- /home item -->
+
+            <!-- home item -->
+            <div class="home-item">
+                <!-- Background Image -->
+                <div class="section-bg" id="secondBGImage"
+                     th:style="'background-image : url(' + ${'/img/background-2.jpg'} + ')'"></div>
+                <!-- /Background Image -->
+
+                <!-- home content -->
+                <div class="home">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-8">
+                                <div class="home-content">
+                                    <h1>Hãy Trở Thành Một Tình Nguyện Viên</h1>
+                                    <p class="lead">Bằng việc tham gia những sự kiện từ thiện, bạn sẽ được ghi nhận là một một tình nguyện viên</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- /home content -->
+            </div>
+            <!-- /home item -->
+        </div>
+        <!-- /HOME OWL -->
+    </header>
+
+    <div id="numbers" class="section">
+        <!-- container -->
+        <div class="container">
+            <!-- row -->
+            <div class="row">
+                <!-- number -->
+                <div class="col-md-3 col-sm-6">
+                    <div class="number">
+                        <i class="fa fa-smile-o"></i>
+                        <h3 id="Donors"></h3>
+                        <span>Người Hảo Tâm</span>
+                    </div>
+                </div>
+                <!-- /number -->
+
+                <!-- number -->
+                <div class="col-md-3 col-sm-6">
+                    <div class="number">
+                        <i class="fa fa-heartbeat"></i>
+                        <h3 id="amountEvent"></h3>
+                        <span>Sự Kiện Từ Thiện</span>
+                    </div>
+                </div>
+                <!-- /number -->
+
+                <!-- number -->
+                <div class="col-md-3 col-sm-6">
+                    <div class="number">
+                        <i class="fa fa-money"></i>
+                        <h3 id="donated">
+                        </h3>
+                        <span>Đã Được Đóng Góp</span>
+                    </div>
+                </div>
+                <!-- /number -->
+
+                <!-- number -->
+                <div class="col-md-3 col-sm-6">
+                    <div class="number">
+                        <i class="fa fa-handshake-o"></i>
+                        <h3 id="volunteer"></h3>
+                        <span>Tình Nguyện Viên</span>
+                    </div>
+                </div>
+                <!-- /number -->
+            </div>
+            <!-- /row -->
+        </div>
+        <!-- /container -->
+    </div>
+
+    <div id="causes" class="section">
+        <div class="container">
+            <div class="row">
+                <!-- section title -->
+                <div class="col-md-8 col-md-offset-2">
+                    <div class="section-title text-center">
+                        <h2 class="title">Kêu Gọi Từ Thiện</h2>
+                        <p class="sub-title">Lòng Tốt Của Bạn Là Điều Quý Giá Nhất Đối Với Chúng Tôi</p>
+                    </div>
+                </div>
+                <!-- section title -->
+
+
+            </div>
+        </div>
+    </div>
+
+    <footer th:replace="layout::mainFooter"></footer>
+    <th:block th:replace="layout::scriptLibAll"></th:block>
+    <script>
+        $(document).ready(function(){
+                var GetDataJson = new JsonHome();
+                GetDataJson.getNumber_AmountDonate("#donated");
+                GetDataJson.getNumberVolunteer("#Donors");
+                GetDataJson.getNumberVolunteerRegisterEvent("#volunteer");
+                GetDataJson.getNumberEventFinish("#amountEvent");
+                GetDataJson.getTop9VoteByDate();
+
+                // getJson("VoteImageRest/getTopImage/2").done(
+                //     function (data) {
+                //         $("#firstBGImage").css(
+                //             "background-image" , 'url(' + data[0].source + ')'
+                //         );
+                //         $("#secondBGImage").css(
+                //             "background-image" , 'url(' + data[1].source + ')'
+                //         );
+                //         console.log(data[0].source);
+                //
+                //     }
+                // );
+
+            }
+        );
+    </script>
+</body>
+</html>

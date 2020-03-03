@@ -1,0 +1,80 @@
+.form-create{
+    background-color: rgba(153,255,116,0.76);
+    border-radius: 3%;
+    border-color: rgba(40,77,38,0.76);
+    border-style: inset;
+    border-width: 2px;
+}
+
+form.form-create > div > div > label{
+    color: rgba(82,61,59,0.76);
+}
+form.form-create > div > div > p{
+    color: rgba(82,61,59,0.76);
+    font-size: x-large;
+    font-weight: bold;
+}
+form.form-create > div > div > p > span{
+    color: rgba(141,118,116,0.76);
+    font-size: medium;
+}
+
+p.messenger-form{
+    font-size: x-large;
+    text-align: center;
+    font-weight: bold;
+}
+
+.main-margin,.form-create{
+    margin-top: 10%;
+    margin-bottom: 10%;
+}
+
+
+.form-create > *{
+    margin: 2%;
+}
+
+.main-background{
+    background-color: rgb(127,184,0);
+    border-radius: 3%;
+    border-color: rgba(93,183,233,0.76);
+    border-style: inset;
+    border-width: 1px;
+}
+.main-card{
+    background-color: rgba(153,255,116,0.76);
+    border-radius: 3%;
+    border-color: rgba(40,77,38,0.76);
+    padding: 3%;
+}
+.main-card > div.causes > div.causes-img{
+    height: 160px;
+}
+.main-card > div.causes{
+    height: 480px;
+}
+.main-card > * {
+    color: rgba(141,118,116,0.76);
+}
+.main-card> div.causes > div.causes-content > p{
+    max-height: 80px;
+    overflow: auto;
+}
+.main-card> div.causes > div.causes-content > h3{
+    max-height: 80px;
+    overflow: hidden;
+}
+
+.summaryOfVote{
+    font-size: small;
+}
+.contentOfVote{
+    font-size: large;
+}
+
+p.content{
+    display: block;
+    white-space: pre-wrap;
+    width: 100%;
+}

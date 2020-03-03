@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:replace="layout::headLibAll"></th:block>
+    <title>Chi Tiết Của Mục Kêu Gọi</title>
+</head>
+<body>
+<header>
+    <nav th:replace="layout::mainNavbar"></nav>
+    <!-- Page Header -->
+    <div id="page-header">
+        <!-- section background -->
+        <div class="section-bg"
+             th:style="'background-image : url(' + ${'/img/background-2.jpg'} + ')'"></div>
+        <!-- /section background -->
+
+        <!-- page header content -->
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="header-content">
+                        <h1>Mục Từ Thiện</h1>
+                        <ul class="breadcrumb">
+                            <li><a th:href="@{/}">Trang Chủ</a></li>
+                            <li><a>Từ Thiện</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /page header content -->
+    </div>
+    <!-- /Page Header -->
+</header>
+
+<div class="section">
+    <!-- container -->
+    <div class="container">
+        <!-- row -->
+        <div class="row">
+            <!-- MAIN -->
+            <main id="main" class="col-md-9">
+                <!-- article -->
+                <div class="article causes-details">
+                    <!-- article img -->
+                    <div class="article-img">
+                        <img src="" alt="">
+                    </div>
+                    <!-- article img -->
+
+                    <!-- causes progress -->
+                    <div class="clearfix">
+                        <div class="causes-progress">
+                            <div>
+                                <span class="causes-goal">Mục Tiêu: <strong></strong></span>
+                            </div>
+                        </div>
+                        <button type="button" class="primary-button causes-donate"
+                                data-toggle="modal" data-target="#donateModal">
+                            Đồng Ý
+                        </button>
+                    </div>
+                    <!-- /causes progress -->
+
+                    <!-- article content -->
+                    <div class="article-content">
+                        <!-- article title -->
+                        <h2 class="article-title"></h2>
+                        <!-- /article title -->
+
+                        <!-- article meta -->
+                        <ul class="article-meta">
+                        </ul>
+                        <!-- /article meta -->
+                        <div id="contentOfVote" class="contentOfVote">
+
+                        </div>
+                    </div>
+                    <!-- /article content -->
+
+                    <!-- article tags share -->
+                    <div class="article-tags-share">
+                        <!-- article tags -->
+                        <ul class="tags" id="listCategory">
+                            <li>Mục:</li>
+                        </ul>
+                        <!-- /article tags -->
+
+                    </div>
+                    <!-- /article tags share -->
+                </div>
+                <!-- /article -->
+            </main>
+            <!-- /MAIN -->
+
+            <!-- ASIDE -->
+            <aside id="aside" class="col-md-3">
+                <!-- category widget -->
+                <div class="widget">
+                    <h3 class="widget-title">Chỉ Mục</h3>
+                    <div class="widget-category">
+                        <ul>
+                        </ul>
+                    </div>
+                </div>
+                <!-- /category widget -->
+
+                <!-- causes widget -->
+                <div class="widget" id="top3Vote">
+
+
+                </div>
+                <!-- causes widget -->
+            </aside>
+            <!-- /ASIDE -->
+        </div>
+        <!-- /row -->
+    </div>
+    <!-- /container -->
+</div>
+
+<footer th:replace="layout::mainFooter"></footer>
+
+<!-- Modal -->
+<div class="modal fade" id="donateModal" tabindex="-1" role="dialog" aria-labelledby="donateModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="exampleModalLabel"></h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Bạn Có Muốn Duyệt?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="primary-button causes-donate" id="accept">Xác Nhận</button>
+                <button type="button" class="primary-button causes-donate" 
+                    onclick="goToPageEdit();">
+                    Sửa Trước Khi Xác Nhận
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="alertModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<th:block th:replace="layout::scriptLibAll"></th:block>
+<script th:src="@{/js/web/SingleProposal.js}"></script>
+<script type="text/javascript" th:inline="javascript">
+    var id = null,
+        singleProposal = new SingleProposal(),
+        voteData = new JsonVote();
+    $(document).ready(function(){
+            var path = window.location.pathname.split('/');
+            id = parseInt(path[3]);
+            voteData.getCategory();
+            singleProposal.getData(id);
+            singleProposal.getTag(id);
+            voteData.getTop3Vote();
+        }
+    );
+
+    $("#accept").click(function () {
+        singleProposal.accept(id);
+    });
+    
+    function goToPageEdit() {
+        window.location.href = "/loginManagement/managerProposal/" + id;
+    }
+</script>
+</body>
+</html>

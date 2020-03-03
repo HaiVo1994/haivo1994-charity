@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:fragment="headLibAll">
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+
+        <!-- Google font -->
+        <link href="https://fonts.googleapis.com/css?family=Roboto:300,400%7CSource+Sans+Pro:700" rel="stylesheet">
+
+        <!-- Bootstrap -->
+        <link type="text/css" rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
+
+        <!-- Owl Carousel -->
+        <link type="text/css" rel="stylesheet" th:href="@{/css/owl.carousel.css}" />
+        <link type="text/css" rel="stylesheet" th:href="@{/css/owl.theme.default.css}" />
+
+        <!-- Font Awesome Icon -->
+        <link rel="stylesheet" th:href="@{/css/font-awesome.min.css}">
+
+        <!-- Custom stlylesheet -->
+        <link type="text/css" rel="stylesheet" th:href="@{/css/style.css}" />
+        <link type="text/css" rel="stylesheet" th:href="@{/css/suport.css}">
+
+        <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+        <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+        <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+        <![endif]-->
+    </th:block>
+</head>
+<body>
+<header>
+    <!-- NAVGATION -->
+    <nav id="main-navbar" th:fragment="mainNavbar">
+        <div class="container">
+            <div class="navbar-header">
+                <!-- Logo -->
+                <div class="navbar-brand">
+                    <a class="logo" th:href="@{/}"><img th:src="@{/img/logo.png}" alt="logo"></a>
+                </div>
+                <!-- Logo -->
+
+                <!-- Mobile toggle -->
+                <button class="navbar-toggle-btn">
+                    <i class="fa fa-bars"></i>
+                </button>
+                <!-- Mobile toggle -->
+
+                <!-- Mobile Search toggle -->
+                <button class="search-toggle-btn">
+                    <i class="fa fa-search"></i>
+                </button>
+                <!-- Mobile Search toggle -->
+            </div>
+
+            <!-- Search -->
+            <div class="navbar-search">
+                <button class="search-btn"><i class="fa fa-search"></i></button>
+                <div class="search-form">
+                    <form th:action="@{/search}" method="post">
+                        <input class="input" type="text" name="search" placeholder="Search">
+                    </form>
+                </div>
+            </div>
+            <!-- Search -->
+
+            <!-- Nav menu -->
+            <ul class="navbar-menu nav navbar-nav navbar-right">
+                <li><a th:href="@{/}">Trang Chủ</a></li>
+                <li class="has-dropdown"><a th:href="@{/all}">Kêu Gọi Từ Thiện</a>
+                    <ul class="dropdown" id="listCause">
+
+                    </ul>
+                </li>
+
+                <li sec:authorize="isAuthenticated()">
+                    <a th:href="@{/event/}">Sự Kiện</a>
+                </li>
+                <li sec:authorize="isAuthenticated()" class="has-dropdown">
+                    <a>Lịch Sử</a>
+                    <ul class="dropdown">
+                        <li><a th:href="@{/donated/list}">Danh Sách Đóng Góp Của Bạn</a></li>
+                        <li><a th:href="@{/event/userRegister}">Danh Sách Sự Kiện Bạn Đã Đăng Ký</a></li>
+                    </ul>
+                </li>
+                <li sec:authorize="hasRole('ROLE_USER')" class="has-dropdown">
+                    <a>Đề Nghị</a>
+                    <ul class="dropdown">
+                        <li><a th:href="@{/proposal/}">Đề Nghị Mở Mục Từ Thiện</a></li>
+                        <li><a th:href="@{/proposal/yourList}">Danh Sách Đề Nghị Của Bạn</a></li>
+                        <li><a th:href="@{/proposal/yourListVote}">Danh Sách Đã Được Duyệt Của Bạn</a></li>
+                        <li><a th:href="@{/event/user}">Danh Sách Sự Kiện Do Bạn Đề Xuất</a></li>
+                    </ul>
+
+                </li>
+                <li sec:authorize="hasRole('ROLE_ADMIN')" class="has-dropdown">
+                    <a>Quản Lý</a>
+                    <ul class="dropdown">
+                        <li><a th:href="@{/proposal_admin/}">Danh Sách Đề Nghị</a></li>
+                        <li><a th:href="@{/event_manager/}">Danh Sách Cần Tạo Sự Kiện</a></li>
+                        <li><a th:href="@{/event_manager/acceptRegister}">Danh Sách Sự Kiện Đã Hết Thời Hạn Đăng Ký</a></li>
+                        <li><a th:href="@{/event_manager/mustFinish}">Danh Sách Sự Kiện Cần Xác Nhận Kết Thúc</a></li>
+                    </ul>
+                </li>
+                <li sec:authorize="isAuthenticated()" class="has-dropdown">
+                    <a>Chào Bạn, <span sec:authentication="name"></span></a>
+                    <ul class="dropdown">
+                        <li><a th:href="@{/}">Sửa Thông Tin</a></li>
+                        <li><a th:href="@{/logout}">Đăng Xuất</a></li>
+                    </ul>
+                </li>
+                <li sec:authorize="isAnonymous()">
+                    <a th:href="@{/create_account/login}">Đăng Nhập</a>
+                </li>
+                <li sec:authorize="isAnonymous()">
+                    <a th:href="@{/create_account/create_account}">Đăng Ký</a>
+                </li>
+            </ul>
+            <!-- Nav menu -->
+        </div>
+    </nav>
+    <!-- /NAVGATION -->
+</header>
+<!-- /HEADER -->
+
+<!-- SECTION -->
+<div class="section">
+    <!-- container -->
+    <div class="container">
+        <!-- row -->
+        <div class="row">
+        </div>
+        <!-- /row -->
+    </div>
+    <!-- /container -->
+</div>
+<!-- /SECTION -->
+
+<!-- FOOTER -->
+<footer id="footer" class="section" th:fragment="mainFooter">
+    <!-- container -->
+    <div class="container">
+        <!-- row -->
+        <div class="row">
+            <!-- footer contact -->
+            <div class="col-md-4">
+                <div class="footer">
+                    <div class="footer-logo">
+                        <a class="logo" href="#"><img th:src="@{/img/logo.png}" alt=""></a>
+                    </div>
+                    <p>Vì những hoàn cảnh khó khăn, hãy tham gia với chúng tôi cho một thế giới tốt đẹp hơn</p>
+                    <ul class="footer-contact">
+                        <li><i class="fa fa-map-marker"></i> 999 Nguyễn Trãi, Thành Phố Huế, Tỉnh Thừa Thiên Huế</li>
+                        <li><i class="fa fa-phone"></i> 607-279-9246</li>
+                        <li><i class="fa fa-envelope"></i> <a href="#">firstPerson@charity.com</a></li>
+                    </ul>
+                </div>
+            </div>
+            <!-- /footer contact -->
+
+            <!-- footer galery -->
+            <div class="col-md-4">
+                <div class="footer">
+                    <h3 class="footer-title">Galery</h3>
+                    <ul class="footer-galery" id="listGallery">
+                        <!--                            <li><a href="#"><img th:src="@{/img/galery-1.jpg}" alt=""></a></li>-->
+                    </ul>
+                </div>
+            </div>
+            <!-- /footer galery -->
+
+            <!-- footer newsletter -->
+            <div class="col-md-4">
+<!--                <div class="footer">-->
+<!--                    <h3 class="footer-title">Bản Tin</h3>-->
+<!--                    <p id="newsletter">-->
+<!--                    </p>-->
+<!--                                            <form class="footer-newsletter">-->
+<!--                                                <input class="input" type="email" placeholder="Enter your email" disabled>-->
+<!--                                                <button class="primary-button" disabled>Đăng Ký</button>-->
+<!--                                            </form>-->
+<!--                </div>-->
+            </div>
+            <!-- /footer newsletter -->
+        </div>
+        <!-- /row -->
+
+        <!-- footer copyright & nav -->
+        <div id="footer-bottom" class="row">
+            <div class="col-md-6 col-md-push-6">
+                <ul class="footer-nav">
+                    <li><a th:href="@{/}">Trang Chủ</a></li>
+                    <li><a th:href="@{/all}">Kêu Gọi Từ Thiện</a></li>
+                </ul>
+            </div>
+
+            <div class="col-md-6 col-md-pull-6">
+                <div class="footer-copyright">
+                            <span><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+    Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
+                                <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></span>
+                </div>
+            </div>
+        </div>
+        <!-- /footer copyright & nav -->
+    </div>
+    <!-- /container -->
+</footer>
+<!-- /FOOTER -->
+
+<th:block th:fragment="scriptLibAll">
+    <!-- jQuery Plugins -->
+    <script th:src="@{/js/jquery.min.js}"></script>
+    <script th:src="@{/js/bootstrap.min.js}"></script>
+    <script th:src="@{/js/owl.carousel.min.js}"></script>
+    <script th:src="@{/js/jquery.stellar.min.js}"></script>
+    <script th:src="@{/js/main.js}"></script>
+    <script th:src="@{/js/web/jquery.cookie.js}"></script>
+    <script th:src="@{/js/web/cookies.js}"></script>
+    <script th:src="@{/js/web/get_data_json.js}"></script>
+    <script>
+        $(document).ready(
+            function () {
+                var category = new JsonCategory();
+                category.getListCategory();
+                var listImage = $("#listGallery");
+                getJson("VoteImageRest/getTopImage/6").done(
+                    function (data) {
+                        listImage.html("");
+                        $.each(data, function (index, imageInfo) {
+                            listImage.append(
+                                "<li><a><img src='" + imageInfo.source + "' alt='Lỗi'></a></li>"
+                            );
+                        });
+
+                    }
+                );
+            }
+        );
+    </script>
+</th:block>
+</body>
+</html>

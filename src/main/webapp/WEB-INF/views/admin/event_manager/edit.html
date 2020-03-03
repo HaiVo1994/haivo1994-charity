@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:replace="layout::headLibAll"></th:block>
+    <title>Tạo Sự Kiện</title>
+</head>
+<body>
+<header>
+    <nav th:replace="layout::mainNavbar"></nav>
+    <!-- Page Header -->
+    <div id="page-header">
+        <!-- section background -->
+        <div class="section-bg"
+             th:style="'background-image : url(' + ${'/img/background-2.jpg'} + ')'"></div>
+        <!-- /section background -->
+
+        <!-- page header content -->
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="header-content">
+                        <h1>Tạo Sự Kiện </h1>
+                        <ul class="breadcrumb">
+                            <li><a th:href="@{/}">Trang Chủ</a></li>
+                            <li><a>Tạo Sự Kiện</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /page header content -->
+    </div>
+    <!-- /Page Header -->
+</header>
+
+<div class="section">
+    <!-- container -->
+    <div class="container">
+        <!-- row -->
+        <div class="row">
+            <!-- MAIN -->
+            <main id="main" class="col-md-9">
+                <div class="row">
+                    <form method="post" th:action="@{/event_manager/edit}" id="create"
+                          th:object="${event}"
+                          enctype="multipart/form-data"
+                          class="form-create">
+                        <div class="row">
+                            <div class="form-group hidden col-sm-12">
+                                <input type="text" hidden th:field="*{id}">
+                            </div>
+                            <div class="form-group col-sm-12">
+                                <label for="location">Địa Điểm</label>
+                                <textarea class="input" id="location" name="location" th:field="*{location}"
+                                          placeholder="Nhập Địa Tổ Chức Sự Kiện"
+                                          maxlength="160">
+                                </textarea>
+                            </div>
+                            <div class="form-group col-sm-12 col-md-6 col-lg-4">
+                                <label for="beginDate">Ngày Bắt Đầu</label>
+                                <input type="date" id="beginDate" name="beginDate" class="input"
+                                       th:field="*{beginDate}">
+                            </div>
+                            <div class="form-group col-sm-12 col-md-6 col-lg-4">
+                                <label for="finishDate">Ngày Kết Thúc</label>
+                                <input type="date" id="finishDate" name="finishDate" class="input"
+                                       th:field="*{finishDate}">
+                            </div>
+                            <div class="form-group col-sm-12 col-md-6 col-lg-4">
+                                <label for="amountVolunteer">Số Tình Nguyện Viên</label>
+                                <input type="number" id="amountVolunteer" name="amountVolunteer" class="input"
+                                       th:field="*{numberVolunteer}" min="1">
+                            </div>
+                            <div class="form-group col-sm-12 col-md-6 col-lg-4">
+                                <label for="finishDate">Thời Hạn Đăng Ký</label>
+                                <input type="date" id="registration" name="registration" class="input"
+                                       th:field="*{registrationDeadline}">
+                            </div>
+                            <div class="form-group col-sm-12">
+                                <label for="note">Ghi Chú</label>
+                                <textarea class="input" id="note" name="note" th:field="*{note}"
+                                          placeholder="Ghi Chú Thêm Cho Sự Kiện"
+                                          maxlength="160">
+                                </textarea>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <button class="primary-button" type="button" onclick="check()">Sửa Sự Kiện</button>
+                        </div>
+                    </form>
+                </div>
+
+            </main>
+            <!-- /MAIN -->
+
+            <!-- ASIDE -->
+            <aside id="aside" class="col-md-3">
+                <!-- category widget -->
+                <div class="widget">
+                    <h3 class="widget-title">Chỉ Mục</h3>
+                    <div class="widget-category">
+                        <ul>
+                        </ul>
+                    </div>
+                </div>
+                <!-- /category widget -->
+
+                <!-- causes widget -->
+                <div class="widget" id="top3Vote">
+
+                </div>
+                <!-- causes widget -->
+            </aside>
+            <!-- /ASIDE -->
+        </div>
+        <!-- /row -->
+    </div>
+    <!-- /container -->
+</div>
+
+<footer th:replace="layout::mainFooter"></footer>
+
+<!-- Modal -->
+
+<th:block th:replace="layout::scriptLibAll"></th:block>
+<script type="text/javascript" th:inline="javascript">
+    var id = null,
+        voteData = new JsonVote();
+    $(document).ready(function(){
+            var path = window.location.pathname.split('/');
+            id = parseInt(path[2]);
+            voteData.getCategory();
+            voteData.getTop3Vote();
+            voteData.hideErrorModal();
+        }
+    );
+    function check() {
+        var beginDate = $("#beginDate").val(),
+            finishDate = $("#finishDate").val(),
+            registration = $("#registration").val(),
+            today= new Date();
+        if (beginDate>finishDate){
+            alert("Ngày Bắt Đầu Phải Trước Ngày Kết Thúc");
+        }
+        else {
+            if (finishDate<today){
+                alert("Ngày Kết Thúc Phải Sau Hôm Nay");
+            }
+            else {
+                if (registration>beginDate){
+                    alert("Hạn Đăng Ký Phải Trước Ngày Bắt Đầu");
+                }
+                else {
+                    $("#create").submit();
+                }
+            }
+        }
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:replace="layout::headLibAll"></th:block>
+    <title>Sự Kiện</title>
+</head>
+<body>
+<header>
+    <nav th:replace="layout::mainNavbar"></nav>
+    <!-- Page Header -->
+    <div id="page-header">
+        <!-- section background -->
+        <div class="section-bg"
+             th:style="'background-image : url(' + ${'/img/background-1.jpg'} + ')'"></div>
+        <!-- /section background -->
+
+        <!-- page header content -->
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="header-content">
+                        <h1>Sự Kiện</h1>
+                        <ul class="breadcrumb">
+                            <li><a th:href="@{/}">Trang Chủ</a></li>
+                            <li><a>Danh Sách Sự Kiện</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /page header content -->
+    </div>
+    <!-- /Page Header -->
+</header>
+
+<<div class="section">
+    <!-- container -->
+    <div class="container">
+        <!-- row -->
+        <div class="row">
+            <!-- MAIN -->
+            <main id="main" class="col-md-9">
+                <div class="section">
+                    <div class="container">
+                        <div class="row">
+                            <div id="listEvent">
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="section">
+                    <div class="container">
+                        <div class="row">
+                            <nav>
+                                <ul class="pagination">
+
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </main>
+            <!-- /MAIN -->
+        </div>
+        <!-- /row -->
+    </div>
+    <!-- /container -->
+</div>
+
+<footer th:replace="layout::mainFooter"></footer>
+
+<th:block th:replace="layout::scriptLibAll"></th:block>
+<script th:src="@{/js/web/eventManagerForAll.js}"></script>
+<script type="text/javascript" th:inline="javascript">
+    var eventManager = new EventManagerForAll(),
+        page = 0,
+        size = 9,
+        recentPage = 0;
+    $(document).ready(function(){
+            var path = window.location.pathname.split('/');
+            if (path[1]==="event"){
+                recentPage = 0;
+            }
+            else if (path[1]==="event_manager"){
+                if (path[2]==="acceptRegister"){
+                    recentPage =1;
+                }
+                if(path[2]==="mustFinish"){
+                    recentPage = 2;
+                }
+            }
+            eventManager.getList(page,size,recentPage);
+            eventManager.setPage(page,size,recentPage);
+        }
+    );
+
+    function transferPage(value) {
+        page = value;
+        eventManager.getList(page,size,recentPage);
+        eventManager.setPage(page,size,recentPage);
+        $("html, body").animate({scrollTop: 0}, 1000);
+    }
+</script>
+</body>
+</html>

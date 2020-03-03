@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:replace="layout::headLibAll"></th:block>
+    <title>Từ Thiện</title>
+</head>
+<body>
+<header>
+    <nav th:replace="layout::mainNavbar"></nav>
+    <!-- Page Header -->
+    <div id="page-header">
+        <!-- section background -->
+        <div class="section-bg"
+             th:style="'background-image : url(' + ${'/img/background-1.jpg'} + ')'"></div>
+        <!-- /section background -->
+
+        <!-- page header content -->
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="header-content">
+                        <h1>Từ Thiện</h1>
+                        <ul class="breadcrumb">
+                            <li><a th:href="@{/}">Trang Chủ</a></li>
+                            <li><a>Từ Thiện Theo Loại</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /page header content -->
+    </div>
+    <!-- /Page Header -->
+</header>
+
+<<div class="section main-background">
+    <!-- container -->
+    <div class="container">
+        <!-- row -->
+        <div class="row">
+            <!-- MAIN -->
+            <main id="main" class="col-md-9">
+                <div class="section">
+                    <div class="container">
+                        <div class="row">
+                            <div id="proposalList">
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="section">
+                    <div class="container">
+                        <div class="row">
+                            <nav>
+                                <ul class="pagination">
+
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </main>
+            <!-- /MAIN -->
+        </div>
+        <!-- /row -->
+    </div>
+    <!-- /container -->
+</div>
+
+<footer th:replace="layout::mainFooter"></footer>
+
+<th:block th:replace="layout::scriptLibAll"></th:block>
+<script th:src="@{/js/web/proposalManager.js}"></script>
+<script type="text/javascript" th:inline="javascript">
+    // var path = window.location.pathname;
+    // console.log(path);
+    // var id = [[${id}]] | null;
+    // var page = [[${page}]] | null;
+    // var size = [[${size}]] | null;
+    // var search = [[${search}]] | null;
+    var proposalManager = new ProposalManager();
+    var page = 0,
+        size = 9;
+    $(document).ready(function(){
+            proposalManager.getListProposal(page,size);
+            proposalManager.setPage(page, size)
+        }
+    );
+
+    function transferPage(value) {
+        page = value;
+        proposalManager.getListProposal(page,size);
+        proposalManager.setPage(page, size);
+        $("html, body").animate({scrollTop: 0}, 1000);
+    }
+</script>
+</body>
+</html>
