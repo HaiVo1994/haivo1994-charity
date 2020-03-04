@@ -3,6 +3,7 @@ package org.haivo_charity.controller.login;
 import org.haivo_charity.model.Category;
 import org.haivo_charity.model.Vote;
 import org.haivo_charity.model.VoteImage;
+import org.haivo_charity.model.support.RegExp;
 import org.haivo_charity.model.support.VoteFileUpload;
 import org.haivo_charity.service.CategoryService;
 import org.haivo_charity.service.VoteService;
@@ -94,14 +95,24 @@ public class ProposalController {
         Vote vote = new Vote();
         vote.setProposal_by(principal.getName());
         vote.setProposal_at(new Date());
-        vote.setRepresentative(voteFileUpload.getRepresentative());
-        vote.setLocalVote(voteFileUpload.getLocalVote());
-        vote.setContent(voteFileUpload.getContent());
-        vote.setTittle(voteFileUpload.getTittle());
+        vote.setRepresentative(
+                RegExp.removeHTML(voteFileUpload.getRepresentative())
+        );
+        vote.setLocalVote(
+                RegExp.removeHTML(voteFileUpload.getLocalVote())
+        );
+        vote.setContent(
+                RegExp.removeHTML(voteFileUpload.getContent())
+        );
+        vote.setTittle(
+                RegExp.removeHTML(voteFileUpload.getTittle())
+        );
         vote.setBeginDate(voteFileUpload.getBeginDate());
         vote.setFinishDate(voteFileUpload.getFinishDate());
         vote.setGoal(voteFileUpload.getGoal());
-        vote.setSummary(voteFileUpload.getSummary());
+        vote.setSummary(
+                RegExp.removeHTML(voteFileUpload.getSummary())
+        );
         vote.setCategories(voteFileUpload.getCategories());
 
         List<VoteImage> voteImages = new ArrayList<VoteImage>();

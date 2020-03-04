@@ -78,3 +78,13 @@ p.content{
     white-space: pre-wrap;
     width: 100%;
 }
+
+form.form-create>div>div>textarea, textarea.inputContent{
+    width: 100%;
+}
+form.form-create>div>div>textarea{
+    height: 120px;
+}
+textarea.inputContent{
+    height: 200px;
+}

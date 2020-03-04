@@ -1,5 +1,9 @@
 package org.haivo_charity.model.support;
 
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.safety.Whitelist;
+
 public class RegExp {
     private static final String phoneReg = "^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\\s\\./0-9]*$";
     private static final String emailReg = "^[a-z][a-z0-9_\\.]{5,32}@[a-z0-9]{2,}(\\.[a-z0-9]{2,4}){1,2}$";
@@ -24,5 +28,9 @@ public class RegExp {
     }
     public static boolean checkNumber(String number){
         return number.matches(numberReg);
+    }
+
+    public static String removeHTML(String text){
+        return Jsoup.clean(text, "", Whitelist.none(), new Document.OutputSettings().prettyPrint(false));
     }
 }

@@ -4,6 +4,7 @@ import org.haivo_charity.model.Category;
 import org.haivo_charity.model.Donate;
 import org.haivo_charity.model.Vote;
 import org.haivo_charity.model.VoteImage;
+import org.haivo_charity.model.support.RegExp;
 import org.haivo_charity.repository.CategoryRepository;
 import org.haivo_charity.repository.DonateRepository;
 import org.haivo_charity.repository.VoteImageRepository;
@@ -145,18 +146,28 @@ public class VoteServiceImpl implements VoteService {
 
     @Override
     public void editProposal(Vote vote, Vote newVote, boolean accept, String user) {
-        vote.setSummary(newVote.getSummary());
+        vote.setSummary(
+                RegExp.removeHTML(newVote.getSummary())
+        );
         vote.setCategories(newVote.getCategories());
         vote.setUpdated_by(user);
         vote.setUpdated_at(new Date());
         vote.setGoal(newVote.getGoal());
         vote.setFinishDate(newVote.getFinishDate());
         vote.setBeginDate(newVote.getBeginDate());
-        vote.setTittle(newVote.getTittle());
-        vote.setContent(newVote.getContent());
+        vote.setTittle(
+                RegExp.removeHTML(newVote.getTittle())
+        );
+        vote.setContent(
+                RegExp.removeHTML(newVote.getContent())
+        );
         vote.setAccepted(accept);
-        vote.setLocalVote(newVote.getLocalVote());
-        vote.setRepresentative(newVote.getRepresentative());
+        vote.setLocalVote(
+                RegExp.removeHTML(newVote.getLocalVote())
+        );
+        vote.setRepresentative(
+                RegExp.removeHTML(newVote.getRepresentative())
+        );
         voteRepository.save(vote);
     }
 

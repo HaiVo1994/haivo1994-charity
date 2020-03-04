@@ -1,4 +1,4 @@
-package org.haivo_charity.Configuration;//package com.charity.cms.Configuration;
+package org.haivo_charity.Configuration;
 //
 //import org.springframework.context.annotation.Bean;
 //import org.springframework.web.multipart.MultipartResolver;

@@ -68,35 +68,15 @@
                                 </textarea>
                             </div>
                             <div class="form-group col-sm-12 col-md-6 col-lg-4">
+                                <label for="localVote">Địa Điểm Nhận</label>
+                                <textarea id="localVote" name="localVote" class="input"
+                                          placeholder="Nhập Địa Điểm Nhận Số Tiền Đóng Góp" th:field="*{localVote}">
+                                </textarea>
+                            </div>
+                            <div class="form-group col-sm-12 col-md-6 col-lg-4">
                                 <label for="goal">Số Tiền Đóng Góp</label>
                                 <input type="number" id="goal" name="goal" class="input"
                                        placeholder="Nhập Số Tiền Đóng Góp Mà Bạn Đề Nghị" th:field="*{goal}">
-                            </div>
-                            <div class="form-group col-sm-12 col-md-6 col-lg-4">
-                                <label for="localVote">Địa Điểm Nhận</label>
-                                <input type="text" id="localVote" name="localVote" class="input"
-                                       placeholder="Nhập Địa Điểm Nhận Số Tiền Đóng Góp" th:field="*{localVote}">
-                            </div>
-                            <div class="form-group col-sm-12 col-md-6 col-lg-4">
-                                <p>Gắn Thẻ</p>
-                                <th:block th:each="category:${categories}">
-                                    <th:block th:if="${checkCategory.get(category.id)}">
-                                        <p>
-                                            <input type="checkbox"
-                                                   th:value="${category.id}" th:field="*{categories}"
-                                                   class="categoryCheck"
-                                                    checked
-                                                    >
-                                            <span th:text="${category.name + '(Đã Chọn)'}" style="font-weight: bolder"></span>
-                                        </p>
-                                    </th:block>
-                                    <th:block th:unless="${checkCategory.get(category.id)}">
-                                        <p>
-                                            <input type="checkbox" th:value="${category.id}" th:field="*{categories}">
-                                            <span th:text="${category.name}"></span>
-                                        </p>
-                                    </th:block>
-                                </th:block>
                             </div>
                             <div class="form-group col-sm-12 col-md-6 col-lg-4">
                                 <label for="representative">Người Đại Diện</label>
@@ -112,6 +92,27 @@
                                 <label for="finishDate">Kết Thúc</label>
                                 <input type="date" id="finishDate" name="finishDate" class="input"
                                        th:field="*{finishDate}">
+                            </div>
+                            <div class="form-group col-sm-12 col-md-6 col-lg-4">
+                                <p>Gắn Thẻ</p>
+                                <th:block th:each="category:${categories}">
+                                    <th:block th:if="${checkCategory.get(category.id)}">
+                                        <p>
+                                            <input type="checkbox"
+                                                   th:value="${category.id}" th:field="*{categories}"
+                                                   class="categoryCheck"
+                                                   checked
+                                            >
+                                            <span th:text="${category.name + '(Đã Chọn)'}" style="font-weight: bolder"></span>
+                                        </p>
+                                    </th:block>
+                                    <th:block th:unless="${checkCategory.get(category.id)}">
+                                        <p>
+                                            <input type="checkbox" th:value="${category.id}" th:field="*{categories}">
+                                            <span th:text="${category.name}"></span>
+                                        </p>
+                                    </th:block>
+                                </th:block>
                             </div>
                         </div>
                         <div class="row">
@@ -169,7 +170,7 @@
             finishDate = $("#finishDate").val();
         console.log("beginDate: " + beginDate);
         console.log("finishDate: " + finishDate);
-        if (beginDate<finishDate){
+        if (beginDate<=finishDate){
             $("#formEdit").submit();
         }
         else {

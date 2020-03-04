@@ -3,6 +3,7 @@ package org.haivo_charity.service.impl;
 import org.haivo_charity.model.Event;
 import org.haivo_charity.model.RegisterEvent;
 import org.haivo_charity.model.Vote;
+import org.haivo_charity.model.support.RegExp;
 import org.haivo_charity.repository.EventRepository;
 import org.haivo_charity.repository.RegisterEventRepository;
 import org.haivo_charity.repository.VoteRepository;
@@ -45,6 +46,10 @@ public class EventServiceImpl implements EventService {
                     event.setVote(vote);
                     event.setCreated_at(date);
                     event.setCreated_by(userName);
+                    String htmlFix = RegExp.removeHTML(event.getLocation());
+                    event.setLocation(htmlFix);
+                    htmlFix = RegExp.removeHTML(event.getNote());
+                    event.setNote(htmlFix);
                     eventRepository.save(event);
                     return true;
                 }
@@ -60,8 +65,12 @@ public class EventServiceImpl implements EventService {
         if (origin!=null){
             origin.setBeginDate(event.getBeginDate());
             origin.setFinishDate(event.getFinishDate());
-            origin.setLocation(event.getLocation());
-            origin.setNote(event.getNote());
+            origin.setLocation(
+                    RegExp.removeHTML(event.getLocation())
+            );
+            origin.setNote(
+                    RegExp.removeHTML(event.getNote())
+            );
             origin.setUpdated_at(new Date());
             origin.setUpdated_by(userName);
             origin = eventRepository.save(origin);
