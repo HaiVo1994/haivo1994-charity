@@ -1,5 +1,6 @@
 package org.haivo_charity.controller;
 
+import org.haivo_charity.model.Account;
 import org.haivo_charity.service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -76,28 +77,44 @@ public class CreateAccountController {
         return modelAndView;
     }
 
-//    @GetMapping("/changeAccount")
-//    public ModelAndView changeAccount(Principal principal) {
-//        Account account = accountService.findByUsername(principal.getName());
-//        ModelAndView modelAndView = new ModelAndView();
-//        if (account != null) {
-//            modelAndView.setViewName("/account/change_password");
-//            modelAndView.addObject("account", account);
-//        } else {
-//            modelAndView.setViewName("/error_404");
-//        }
-//        return modelAndView;
-//    }
-//    @PostMapping("/changeAccount")
-//    public ModelAndView updateAccount(Principal principal, @RequestBody Account account) {
-//        Account accountOrigin = accountService.findByUsername(principal.getName());
-//        ModelAndView modelAndView = new ModelAndView();
-//        if (accountOrigin != null) {
-//            accountService.update(accountOrigin, account);
-//            modelAndView.setViewName("/donate/home");
-//        } else {
-//            modelAndView.setViewName("/error_404");
-//        }
-//        return modelAndView;
-//    }
+    @GetMapping("/changeAccount")
+    public ModelAndView changeAccount(Principal principal) {
+        Account account = accountService.findByUsername(principal.getName());
+        ModelAndView modelAndView = new ModelAndView();
+        if (account != null) {
+            modelAndView.setViewName("/account/change_password");
+            account.setPassword("");
+            modelAndView.addObject("account", account);
+        } else {
+            modelAndView.setViewName("/error_404");
+        }
+        return modelAndView;
+    }
+    @PostMapping("/changeAccount")
+    public ModelAndView updateAccount(Principal principal,
+                                      @RequestParam("username") String userName,
+                                      @RequestParam("oldPassword") String oldPassword,
+                                      @RequestParam("newPassword") String newPassword,
+                                      @RequestParam("yourName") String yourName,
+                                      @RequestParam("yourEmail") String yourEmail,
+                                      @RequestParam("yourPhone") String yourPhone) {
+        Account accountOrigin = accountService.findByUsername(principal.getName());
+        ModelAndView modelAndView = new ModelAndView("/account/change_password");
+        if ((accountOrigin != null) && (userName.equals(principal.getName()))) {
+            Account account = accountService.update(accountOrigin,principal.getName(), oldPassword, newPassword, yourName,yourEmail, yourPhone);
+            if (account!=null){
+                modelAndView.addObject("account", account);
+                modelAndView.addObject("result","Thông Tin Đã Được Thay Đổi");
+                return modelAndView;
+            }
+            else {
+                modelAndView.addObject("result","Thông Tin Nhập Vào Sai");
+            }
+        } else {
+            modelAndView.addObject("result","Lỗi! Sai Tài Khoản");
+        }
+        accountOrigin.setPassword("");
+        modelAndView.addObject("account", accountOrigin);
+        return modelAndView;
+    }
 }

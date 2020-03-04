@@ -32,12 +32,14 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()
             .antMatchers("/", "/category/*","/all","/search",
                         "/categoryRest/**","/donateRest/**", "/volunteerRest/**",
-                        "/VoteImageRest/**", "/voteRest/**", "/create_account/**")
+                        "/VoteImageRest/**", "/voteRest/**", "/create_account/login",
+                        "/create_account/create_account")
             .permitAll();
         //dang nhap moi vao xem duoc
         http.authorizeRequests()
             .antMatchers("/account/**", "/loginManagement/**", "/proposalRest/**",
-                    "/eventRest/**", "/event/**", "/donated/**")
+                    "/eventRest/**", "/event/**", "/donated/**",
+                    "/create_account/changeAccount")
             .authenticated();
         //Chi user moi vao duoc
         http.authorizeRequests()

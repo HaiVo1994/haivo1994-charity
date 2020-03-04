@@ -29,11 +29,24 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public void update(Account originAccount, Account newAccount) {
-        originAccount.setPassword(newAccount.getPassword());
-        originAccount.setUpdated_at(new Date());
-        originAccount.setUpdated_by(newAccount.getUsername());
-        accountRepository.save(originAccount);
+    public Account update(Account originAccount, String userName, String oldPassWord,
+                       String newPassword, String name, String email, String phone) {
+        if (oldPassWord.equals(originAccount.getPassword())){
+            Date date = new Date();
+            originAccount.setPassword(newPassword);
+            originAccount.setUpdated_at(date);
+            originAccount.setUpdated_by(userName);
+            originAccount = accountRepository.save(originAccount);
+            Volunteer volunteer = originAccount.getVolunteer();
+            volunteer.setEmail(email);
+            volunteer.setName(name);
+            volunteer.setPhone(phone);
+            volunteer = volunteerRepository.save(volunteer);
+            originAccount.setVolunteer(volunteer);
+            return originAccount;
+        }
+        return null;
+
     }
 
     @Autowired

@@ -9,8 +9,8 @@
 form.form-create > div > div > label{
     color: rgba(82,61,59,0.76);
 }
-form.form-create > div > div > p{
-    color: rgba(82,61,59,0.76);
+form.form-create > div > div > p, p.messengerText{
+    color: rgba(255,112,13,0.76);
     font-size: x-large;
     font-weight: bold;
 }
@@ -26,8 +26,12 @@ p.messenger-form{
 }
 
 .main-margin,.form-create{
-    margin-top: 10%;
-    margin-bottom: 10%;
+    margin-top: 5%;
+    margin-bottom: 5%;
+}
+.main-padding{
+    padding-top: 3%;
+    padding-bottom: 3%;
 }
 
 
@@ -87,4 +91,14 @@ form.form-create>div>div>textarea{
 }
 textarea.inputContent{
     height: 200px;
+}
+
+div.showMessenger{
+    background-color: rgba(0,255,60,0.76);
+    text-align: center;
+}
+
+div.showMessenger>p{
+    color: rgba(29,18,51,0.76);
+    font-size: x-large;
 }

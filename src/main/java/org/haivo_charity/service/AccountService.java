@@ -8,7 +8,7 @@ import java.util.List;
 public interface AccountService {
     Account findById(Long id);
     Account findByUsername(String username);
-    void update(Account originAccount, Account newAccount);
+    Account update(Account originAccount, String userName, String oldPassWord, String newPassword, String name, String email, String phone);
     String create(String userName, String password, String yourName, String yourEmail, String yourPhone);
     void deleteAccount(String username);
 

@@ -45,7 +45,9 @@ class SingleProposal {
             })
             .always(function (data) {
                 $("#donateModal").modal("hide");
-                alert("Bạn Đã Chấp Nhận Đề Nghị");
+                var messenger = $("#showMessenger");
+                messenger.show();
+                messenger.html("<p class='messengerText'>Bạn Đã Chấp Nhận Đề Nghị</p>");
             }
         );
     }
