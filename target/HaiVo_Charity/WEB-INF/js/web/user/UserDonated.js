@@ -61,7 +61,7 @@ class UserDonated {
                 "</li>");
         }
 
-        getJson("listVote/" + size).done(
+        getJson("donated/listVote/" + size).done(
             function (data) {
                 var totalPage = Math.ceil(data/size);
                 var show = 0;
