@@ -1,5 +1,6 @@
 package org.haivo_charity.controller.login;
 
+import org.apache.commons.io.FilenameUtils;
 import org.haivo_charity.model.Category;
 import org.haivo_charity.model.Vote;
 import org.haivo_charity.model.VoteImage;
@@ -116,11 +117,15 @@ public class ProposalController {
         vote.setCategories(voteFileUpload.getCategories());
 
         List<VoteImage> voteImages = new ArrayList<VoteImage>();
+        long time = System.currentTimeMillis();
+        int countImage = 0;
+        String name, nameOfFile;
         for (CommonsMultipartFile fileData : fileDatas) {
             // Tên file gốc tại Client.
-            String name = fileData.getOriginalFilename();
+            nameOfFile = fileData.getOriginalFilename();
 //            System.out.println("Client File Name = " + name);
-            if (name != null && name.length() > 0) {
+            if (nameOfFile != null && nameOfFile.length() > 0) {
+                name = principal.getName() + "_" + time + "_" + countImage  + "." + FilenameUtils.getExtension(nameOfFile);
                 try {
                     // Tạo file tại Server.
                     File serverFile = new File(uploadRootDir.getAbsolutePath() + File.separator + name);
@@ -132,6 +137,7 @@ public class ProposalController {
                     voteImage.setSource("/" + uploadRootDir.getName() + File.separator + name);
                     System.out.println(uploadRootDir + File.separator + name);
                     voteImages.add(voteImage);
+                    countImage ++;
                 } catch (Exception e) {
                     System.out.println("Error Write file: " + name);
                 }
