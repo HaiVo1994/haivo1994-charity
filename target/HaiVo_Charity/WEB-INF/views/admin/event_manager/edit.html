@@ -146,6 +146,9 @@
             if (finishDate<today){
                 alert("Ngày Kết Thúc Phải Sau Hôm Nay");
             }
+            else if ($("#amountVolunteer").val() <=0){
+                alert("Số TÌnh Nguyện Viên Cần Thiết Phải Lớn Hơn 0");
+            }
             else {
                 if (registration>beginDate){
                     alert("Hạn Đăng Ký Phải Trước Ngày Bắt Đầu");

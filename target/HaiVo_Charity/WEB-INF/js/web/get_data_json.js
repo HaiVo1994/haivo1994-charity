@@ -185,7 +185,14 @@ class JsonVote{
                 }
                 main.find(".article-content").find(".article-title").html(data.tittle);
                 var dateBegin = new Date(data.beginDate),
-                    dateFinish = new Date(data.finishDate);
+                    dateFinish = new Date(data.finishDate),
+                    toDay = new Date();
+                if (dateFinish>=toDay){
+                    $("#createEventButton").hide();
+                }
+                else {
+                    $("#createEventButton").show();
+                }
                 main.find(".article-content").find(".article-meta")
                     .append("<li>Ngày Bắt Đầu: " + getStringDate(dateBegin) + "</li>");
                 main.find(".article-content").find(".article-meta")
