@@ -24,10 +24,12 @@ public interface DonateRepository extends CrudRepository<Donate, Long> {
     Long sumDonateOfVote(@Param("vote") Vote vote);
 
     @Query("SELECT distinct d.vote  FROM Donate d " +
-            "WHERE d.volunteer = :volunteer")
+            "WHERE d.volunteer = :volunteer " +
+            "GROUP BY d.vote")
     Page<Vote> getListAccountDonate(@Param("volunteer") Volunteer volunteer, Pageable pageable);
     @Query("SELECT distinct d.vote  FROM Donate d " +
-            "WHERE d.volunteer = :volunteer")
+            "WHERE d.volunteer = :volunteer " +
+            "GROUP BY d.vote")
     List<Vote> getListAccountDonate(@Param("volunteer") Volunteer volunteer);
     @Query("SELECT SUM(d.amount) FROM Donate d " +
             "WHERE d.volunteer = :volunteer " +
