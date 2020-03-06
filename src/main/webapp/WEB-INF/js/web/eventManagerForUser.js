@@ -31,11 +31,14 @@ class EventManagerForUser {
                         }
                         var beginDate = new Date(event.beginDate),
                             finishDate = new Date(event.finishDate),
-                            registration= new Date(event.registrationDeadline);
+                            registration= new Date(event.registrationDeadline),
+                            buttonText = "";
                         if (event.finished){
                             linkCause = "/event/single_event_finish/" + event.id;
+                            buttonText = "Sự Kiện Đã Kết Thúc";
                         }else {
                             linkCause = "/event/single_event/" + event.id;
+                            buttonText = "Sự Kiện Đang Tiến Hành";
                         }
                         html =
                             "<div class='col-md-4 main-card'>" +
@@ -52,7 +55,7 @@ class EventManagerForUser {
                             "<p>Hạn Đăng Ký: " + getStringDate(registration) + "</p>" +
                             "<p class='summaryOfVote'>" + contentOfVote + "</p>" +
 
-                            "<a href='" + linkCause + "' class='primary-button causes-donate'>Chi Tiết</a>" +
+                            "<a href='" + linkCause + "' class='primary-button causes-donate'>" + buttonText + "</a>" +
                             "</div>" +
                             "</div>" +
                             "</div>";
@@ -139,8 +142,6 @@ class EventManagerForUser {
                     .append("<li>Ngày Bắt Đầu: " + getStringDate(dateBegin) + "</li>");
                 main.find(".article-content").find(".article-meta")
                     .append("<li>Ngày Kết Thúc: " + getStringDate(dateFinish) + "</li>");
-                main.find(".article-content").find(".article-meta")
-                    .append("<li>Ngày Bắt Đầu: " + getStringDate(dateBegin) + "</li>");
                 main.find(".article-content").find(".article-meta")
                     .append("<li>Hạn Đăng Ký: " + getStringDate(deadline) + "</li>");
                 $("#contentOfVote").html("<p class='content'>" + data.vote.content + "</p>");

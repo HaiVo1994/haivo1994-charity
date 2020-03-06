@@ -13,10 +13,10 @@ import java.util.List;
 public class DonateServiceImpl implements DonateService {
     @Autowired
     private DonateRepository donateRepository;
-    @Override
-    public Iterable<Donate> findAllByVolunteer(Volunteer volunteer) {
-        return donateRepository.findAllByVolunteer(volunteer);
-    }
+//    @Override
+//    public Iterable<Donate> findAllByVolunteer(Volunteer volunteer) {
+//        return donateRepository.findAllByVolunteer(volunteer);
+//    }
 
     @Override
     public Iterable<Donate> findAll() {

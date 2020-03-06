@@ -10,19 +10,21 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 
 public interface VolunteerRepository extends CrudRepository<Volunteer,Long> {
-    public Iterable<Volunteer> findAllByDonates(Donate donate);
+//    Iterable<Volunteer> findAllByDonates(Donate donate);
 
     @Query("SELECT vol FROM Volunteer vol INNER JOIN Donate don ON don.volunteer = vol " +
             "WHERE SUM(don.amount)>= :amount " +
             "GROUP BY vol")
-    public Iterable<Volunteer> getListVolunteerDonateMore(@Param("amount") Long amount);
+    Iterable<Volunteer> getListVolunteerDonateMore(@Param("amount") Long amount);
 
-    public Volunteer findFirstByNameOrderByIdDesc(String name);
-    public Volunteer findFirstByEmailOrderByIdDesc(String email);
-    public Volunteer findFirstByPhoneOrderByIdDesc(String phone);
-    public Volunteer findFirstByNameAndEmailAndPhone(String name, String email, String phone);
+    Volunteer findFirstByNameOrderByIdDesc(String name);
+    Volunteer findFirstByEmailOrderByIdDesc(String email);
+    Volunteer findFirstByPhoneOrderByIdDesc(String phone);
+    Volunteer findFirstByNameAndEmailAndPhone(String name, String email, String phone);
 
-    public List<Volunteer> findAllByDonatesIsNotNull();
+    @Query("SELECT v FROM Volunteer v " +
+            "WHERE v.donates.size > 0")
+    List<Volunteer> findAllByDonatesIsNotNull();
 
-    public Volunteer findByAccount(Account account);
+    Volunteer findByAccount(Account account);
 }

@@ -65,6 +65,8 @@ public class EventServiceImpl implements EventService {
         if (origin!=null){
             origin.setBeginDate(event.getBeginDate());
             origin.setFinishDate(event.getFinishDate());
+            origin.setRegistrationDeadline(event.getRegistrationDeadline());
+            origin.setNumberVolunteer(event.getNumberVolunteer());
             origin.setLocation(
                     RegExp.removeHTML(event.getLocation())
             );

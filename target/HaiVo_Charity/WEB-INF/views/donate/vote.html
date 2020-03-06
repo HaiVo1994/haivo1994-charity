@@ -73,7 +73,7 @@
                         </button>
                         <th:block sec:authorize="hasRole('ROLE_ADMIN')">
                             <button type="button" class="primary-button causes-donate"
-                                    data-toggle="modal" onclick="transferCreateEvent()">
+                                    data-toggle="modal" onclick="transferCreateEvent()" id="createEventButton">
                                 Tạo Sự Kiện
                             </button>
                         </th:block>
@@ -167,7 +167,7 @@
                             <div class="form-group">
                                 <label for="moneyDonate">Số Tiền</label>
                                 <input type="number" class="form-control" id="moneyDonate"
-                                       name="amount" placeholder="Số Tiền Bạn Muốn Đóng Góp">
+                                       name="amount" placeholder="Số Tiền Bạn Muốn Đóng Góp" min="1">
                                 <p class="alert alert-danger errorForMoneyDonate"></p>
                             </div>
                             <div class="form-group">
@@ -191,7 +191,7 @@
                             <div class="form-group">
                                 <label for="moneyDonate">Số Tiền</label>
                                 <input type="number" class="form-control" id="moneyDonateLogin"
-                                       name="amount" placeholder="Số Tiền Bạn Muốn Đóng Góp">
+                                       name="amount" placeholder="Số Tiền Bạn Muốn Đóng Góp" min="1">
                                 <p class="alert alert-danger errorForMoneyDonate"></p>
                             </div>
                             <div class="form-group">
@@ -288,11 +288,23 @@
     );
 
     $("#submitDonateNoLogin").click(function () {
-        voteData.donateNoLogin(id);
+        var moneyDonate = $("#moneyDonate").val();
+        if (moneyDonate>0){
+            voteData.donateNoLogin(id);
+        }
+        else {
+            alert("Số Tiền Đóng Góp Phải Lớn Hơn 0");
+        }
+
     });
     $("#submitDonateLogin").click(
         function () {
-            voteData.donateLogin(id);
+            if ($("#moneyDonateLogin").val()>0){
+                voteData.donateLogin(id);
+            }
+            else {
+                alert("Số Tiền Đóng Góp Phải Lớn Hơn 0");
+            }
         }
     );
 

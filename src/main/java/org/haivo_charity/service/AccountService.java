@@ -10,7 +10,7 @@ public interface AccountService {
     Account findByUsername(String username);
     Account update(Account originAccount, String userName, String oldPassWord, String newPassword, String name, String email, String phone);
     String create(String userName, String password, String yourName, String yourEmail, String yourPhone);
-    void deleteAccount(String username);
+//    void deleteAccount(String username);
 
     long countVolunteer();
 

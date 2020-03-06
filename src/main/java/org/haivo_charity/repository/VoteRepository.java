@@ -12,8 +12,8 @@ import java.util.Date;
 import java.util.List;
 
 public interface VoteRepository extends CrudRepository<Vote, Long> {
-    Iterable<Vote> findAllByCategories(Category category);
-    Iterable<Vote> getAllByFinishDateIsNull();
+//    Iterable<Vote> findAllByCategories(Category category);
+//    Iterable<Vote> getAllByFinishDateIsNull();
     @Query("SELECT v " +
             "FROM Vote v " +
             "WHERE v.event IS NULL " +
@@ -26,9 +26,9 @@ public interface VoteRepository extends CrudRepository<Vote, Long> {
             "WHERE v.event IS NULL " +
             "AND v.isAccepted = true ")
     Long countAllVoteNotFinish();
-    Page<Vote> findAllByCategoriesAndEventIsNull(Category category, Pageable pageable);
+//    Page<Vote> findAllByCategoriesAndEventIsNull(Category category, Pageable pageable);
     List<Vote> findAllByCategoriesAndEventIsNull(Category category);
-    Page<Vote> findAllByFinishDateIsNull(Pageable pageable);
+//    Page<Vote> findAllByFinishDateIsNull(Pageable pageable);
 
     @Query("SELECT v " +
             "FROM Vote v " +

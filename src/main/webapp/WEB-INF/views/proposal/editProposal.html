@@ -40,7 +40,7 @@
         <div class="row">
             <!-- MAIN -->
             <main id="main" class="col-md-9">
-                <div class="row main-margin text-center" th:if="${proposalSuccess!=null}">
+                <div class="row main-margin text-center " th:if="${proposalSuccess!=null}">
                     <p class="messenger-form" th:text="${proposalSuccess}"></p>
                 </div>
                 <div class="row">
@@ -173,7 +173,7 @@
         console.log("finishDate: " + finishDate);
         if (beginDate<=finishDate){
             if (goal>0){
-                $("#createProposal").submit();
+                $("#formEdit").submit();
             }
             else {
                 alert("Số Tiền Đề Nghị Phải Lớn Hơn 0");

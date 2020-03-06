@@ -9,7 +9,7 @@ import org.springframework.data.repository.CrudRepository;
 
 public interface VoteImageRepository extends CrudRepository<VoteImage, Long> {
     Iterable<VoteImage> findAllByVote(Vote vote);
-    VoteImage findFirstByVote(Vote vote);
+//    VoteImage findFirstByVote(Vote vote);
     void deleteAllByVoteId(Long vote_id);
 
     @Query("SELECT vi FROM VoteImage vi " +

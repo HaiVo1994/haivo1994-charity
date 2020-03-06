@@ -158,11 +158,17 @@
     );
     function checkData(){
         var beginDate = $("#beginDate").val(),
-            finishDate = $("#finishDate").val();
+            finishDate = $("#finishDate").val(),
+            goal = $("#goal").val();
         console.log("beginDate: " + beginDate);
         console.log("finishDate: " + finishDate);
         if (beginDate<=finishDate){
-            $("#createProposal").submit();
+            if (goal>0){
+                $("#createProposal").submit();
+            }
+            else {
+                alert("Số Tiền Đề Nghị Phải Lớn Hơn 0");
+            }
         }
         else {
             alert("Ngày Bắt Đầu Phải Trước Ngày Ngày Kết Thúc");

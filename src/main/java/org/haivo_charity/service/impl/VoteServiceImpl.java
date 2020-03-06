@@ -134,9 +134,11 @@ public class VoteServiceImpl implements VoteService {
                 return false;
             }
             else {
+                vote.setCreated_by(admin);
+                vote.setCreated_at(new Date());
                 vote.setAccepted(true);
-                vote.setUpdated_at(new Date());
-                vote.setUpdated_by(admin);
+//                vote.setUpdated_at(new Date());
+//                vote.setUpdated_by(admin);
                 voteRepository.save(vote);
                 return true;
             }
@@ -151,7 +153,8 @@ public class VoteServiceImpl implements VoteService {
         );
         vote.setCategories(newVote.getCategories());
         vote.setUpdated_by(user);
-        vote.setUpdated_at(new Date());
+        Date date = new Date();
+        vote.setUpdated_at(date);
         vote.setGoal(newVote.getGoal());
         vote.setFinishDate(newVote.getFinishDate());
         vote.setBeginDate(newVote.getBeginDate());
@@ -162,6 +165,10 @@ public class VoteServiceImpl implements VoteService {
                 RegExp.removeHTML(newVote.getContent())
         );
         vote.setAccepted(accept);
+        if (accept){
+            vote.setCreated_at(date);
+            vote.setCreated_by(user);
+        }
         vote.setLocalVote(
                 RegExp.removeHTML(newVote.getLocalVote())
         );

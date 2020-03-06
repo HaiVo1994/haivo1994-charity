@@ -102,10 +102,10 @@ public class AccountServiceImpl implements AccountService {
     }
 
 
-    @Override
-    public void deleteAccount(String username) {
-
-    }
+//    @Override
+//    public void deleteAccount(String username) {
+//
+//    }
 
     @Override
     public long countVolunteer() {
