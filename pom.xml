@@ -105,6 +105,13 @@
       <artifactId>mysql-connector-java</artifactId>
       <version>8.0.19</version>
     </dependency>
+    <!-- https://mvnrepository.com/artifact/org.postgresql/postgresql -->
+    <dependency>
+      <groupId>org.postgresql</groupId>
+      <artifactId>postgresql</artifactId>
+      <version>42.2.10</version>
+    </dependency>
+
     <!-- https://mvnrepository.com/artifact/org.springframework.data/spring-data-jpa -->
     <dependency>
       <groupId>org.springframework.data</groupId>
